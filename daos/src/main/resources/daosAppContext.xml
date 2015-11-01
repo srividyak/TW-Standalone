@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+        >
+
+    <context:component-scan base-package="com.tapwisdom.core.daos"/>
+    <context:annotation-config/>
+
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <mongo:mongo host="${server}" port="${port}"/>
+    <mongo:db-factory dbname="${name}"/>
+
+    <bean id="mongoClient" class="com.mongodb.MongoClient"/>
+
+    <bean id="mongoDbFactoryBean" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+        <constructor-arg name="mongo" ref="mongoClient"/>
+        <constructor-arg name="databaseName" value="${name}"/>
+    </bean>
+
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactoryBean" />
+    </bean>
+
+</beans>

@@ -1,0 +1,2 @@
+rootProject.name = 'TW-Standalone'
+include 'common', 'daos', 'es', 'jobs', 'miscellaneous-jobs', 'notifications'
